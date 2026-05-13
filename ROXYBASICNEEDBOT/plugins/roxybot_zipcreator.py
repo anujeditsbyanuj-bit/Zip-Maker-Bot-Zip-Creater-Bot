@@ -18,8 +18,6 @@ import zipfile
 import rarfile
 import py7zr
 import shutil
-shutil.rmtree(extract_path, ignore_errors=True)
-os.remove(file_path)
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from ROXYBASICNEEDBOT.modules.roxybot_zipmaker import roxybot_zipmaker, EncryptionType
@@ -638,6 +636,11 @@ async def roxybot_extract_archive(client, message, file_path, password, msg):
     
     except Exception as e:
         await msg.edit_text(f"❌ Error: {str(e)}")
+
+finally:
+    shutil.rmtree(extract_path, ignore_errors=True)
+    if os.path.exists(file_path):
+        os.remove(file_path)
 
 
 # 𝕽𝕺𝕏𝖄•𝔹𝕒𝕤𝕚𝕔ℕ𝕖𝕖𝕕𝔹𝕠𝕥 ⚡️
