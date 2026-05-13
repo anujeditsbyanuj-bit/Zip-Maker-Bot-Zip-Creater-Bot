@@ -17,6 +17,9 @@ import os
 import zipfile
 import rarfile
 import py7zr
+import shutil
+shutil.rmtree(extract_path, ignore_errors=True)
+os.remove(file_path)
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from ROXYBASICNEEDBOT.modules.roxybot_zipmaker import roxybot_zipmaker, EncryptionType
