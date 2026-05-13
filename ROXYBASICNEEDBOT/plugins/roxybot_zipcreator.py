@@ -540,7 +540,7 @@ async def roxybot_unzip_command(client: Client, message: Message):
     )
 
 
-@Client.on_message(filters.document & filters.private, group=2)
+@Client.on_message(filters.document & filters.private & filters.regex(r".*\.(zip|rar|7z)$"), group=2)
 async def roxybot_handle_unzip_file(client: Client, message: Message):
     file = message.document
     
