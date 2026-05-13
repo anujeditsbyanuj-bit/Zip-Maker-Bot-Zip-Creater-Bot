@@ -155,6 +155,7 @@ class RoxyZipMakerBot:
                 BotCommand("start", "⚡ Sᴛᴀʀᴛ Tʜᴇ Bᴏᴛ"),
                 BotCommand("help", "🆘 Gᴇᴛ Hᴇʟᴘ & Gᴜɪᴅᴇ"),
                 BotCommand("create", "📦 Cʀᴇᴀᴛᴇ Aʀᴄʜɪᴠᴇ (ZIP/RAR/7z)"),
+                BotCommand("unzip", "📂 Eᴜᴛʀᴀᴄᴛ ZIP/RAR/7z Fɪʟᴇ"),
                 BotCommand("files", "📁 Vɪᴇᴡ Qᴜᴇᴜᴇᴅ Fɪʟᴇꜱ"),
                 BotCommand("addthumb", "🖼️ Sᴇᴛ Cᴜꜱᴛᴏᴍ Tʜᴜᴍʙɴᴀɪʟ"),
                 BotCommand("delthumb", "🗑️ Dᴇʟᴇᴛᴇ Tʜᴜᴍʙɴᴀɪʟ"),
