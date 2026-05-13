@@ -558,7 +558,7 @@ async def roxybot_handle_unzip_file(client: Client, message: Message):
     if message.caption and "password=" in message.caption:
         password = message.caption.split("password=")[-1].strip()
     
-    await msg.edit_text("📂 Eᴘᴛʀᴀᴄᴛɪɴɢ...")
+    await msg.edit_text("📂 Extracting...")
     
     await roxybot_extract_archive(client, message, file_path, password, msg)
 
