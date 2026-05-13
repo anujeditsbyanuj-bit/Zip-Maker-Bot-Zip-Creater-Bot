@@ -14,6 +14,9 @@
 # © 2025 RoxyBasicNeedBot. All Rights Reserved.
 
 import os
+import zipfile
+import rarfile
+import py7zr
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from ROXYBASICNEEDBOT.modules.roxybot_zipmaker import roxybot_zipmaker, EncryptionType
@@ -524,6 +527,39 @@ async def roxybot_create_final_archive(client: Client, message: Message, user_id
             del roxybot_user_states[user_id]
 
 
+@Client.on_message(filters.command("unzip") & filters.private)
+async def roxybot_unzip_command(client: Client, message: Message):
+    await message.reply_text(
+        "📂 **Send ZIP / RAR / 7z file to extract**\n\n"
+        "🔐 Password ho to caption me likho:\n"
+        "`password=yourpass`\n\n"
+        "<blockquote>⚡ RoxyBasicNeedBot</blockquote>"
+    )
+
+
+@Client.on_message(filters.document & filters.private, group=2)
+async def roxybot_handle_unzip_file(client: Client, message: Message):
+    file = message.document
+    
+    if not file.file_name.lower().endswith((".zip", ".rar", ".7z")):
+        return
+    
+    msg = await message.reply_text("⏳ Dᴏᴡɴʟᴏᴀᴅɪɴɢ...")
+    
+    file_path = await message.download(
+        file_name=f"downloads/{file.file_name}"
+    )
+    
+    # password detect
+    password = None
+    if message.caption and "password=" in message.caption:
+        password = message.caption.split("password=")[-1].strip()
+    
+    await msg.edit_text("📂 Eᴘᴛʀᴀᴄᴛɪɴɢ...")
+    
+    await roxybot_extract_archive(client, message, file_path, password, msg)
+
+
 # 𝕽𝕺𝕏𝖄•𝔹𝕒𝕤𝕚𝕔ℕ𝕖𝕖𝕕𝔹𝕠𝕥 ⚡️
 # Cancel Command
 
@@ -559,6 +595,46 @@ async def roxybot_cancel_command(client: Client, message: Message):
             "ℹ️ **Nᴏ ᴀᴄᴛɪᴠᴇ ᴏᴘᴇʀᴀᴛɪᴏɴ ᴛᴏ ᴄᴀɴᴄᴇʟ**\n\n"
             "<blockquote>⚡ RᴏxʏBᴀꜱɪᴄNᴇᴇᴅBᴏᴛ</blockquote>"
         )
+
+
+async def roxybot_extract_archive(client, message, file_path, password, msg):
+    import os
+    
+    extract_path = f"downloads/extracted_{message.from_user.id}"
+    os.makedirs(extract_path, exist_ok=True)
+    
+    try:
+        if file_path.endswith(".zip"):
+            with zipfile.ZipFile(file_path) as z:
+                z.extractall(
+                    path=extract_path,
+                    pwd=password.encode() if password else None
+                )
+        
+        elif file_path.endswith(".rar"):
+            with rarfile.RarFile(file_path) as r:
+                r.extractall(
+                    path=extract_path,
+                    pwd=password
+                )
+        
+        elif file_path.endswith(".7z"):
+            with py7zr.SevenZipFile(file_path, mode='r', password=password) as z:
+                z.extractall(path=extract_path)
+        
+        await msg.edit_text("📤 Uᴘʟᴏᴀᴅɪɴɢ...")
+        
+        # upload all files
+        for root, _, files in os.walk(extract_path):
+            for f in files:
+                await message.reply_document(
+                    document=os.path.join(root, f)
+                )
+        
+        await msg.delete()
+    
+    except Exception as e:
+        await msg.edit_text(f"❌ Error: {str(e)}")
 
 
 # 𝕽𝕺𝕏𝖄•𝔹𝕒𝕤𝕚𝕔ℕ𝕖𝕖𝕕𝔹𝕠𝕥 ⚡️
