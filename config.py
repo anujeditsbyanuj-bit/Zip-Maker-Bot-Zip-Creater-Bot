@@ -25,7 +25,7 @@ class RoxyBotConfig:
     # Bot Configuration
     ROXYBOT_API_ID = int(os.environ.get("API_ID", "34446649"))
     ROXYBOT_API_HASH = os.environ.get("API_HASH", "8dc570c08d8e35e88fb9bfc73c65d7fa")
-    ROXYBOT_BOT_TOKEN = os.environ.get("BOT_TOKEN", "8274193303:AAE0-3mLMCYvZWHoz5rGf7jvKWjUHHAIddM")
+    ROXYBOT_BOT_TOKEN = os.environ.get("BOT_TOKEN", "8015464564:AAFe6QCyYpfSWPGbwih_u_XejaDLcho1KOI")
     
     # MongoDB Configuration
     ROXYBOT_MONGODB_URI = os.environ.get("MONGODB_URI", "mongodb+srv://Anujedit:Anujedit@cluster0.7cs2nhd.mongodb.net/?appName=Cluster0")
@@ -37,7 +37,7 @@ class RoxyBotConfig:
     
     # Bot Settings
     ROXYBOT_OWNER_ID = int(os.environ.get("OWNER_ID", "7892805795"))
-    ROXYBOT_LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "0"))
+    ROXYBOT_LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1003824246703"))
     
     # Admin IDs (space or comma separated for multiple admins)
     @staticmethod
@@ -58,7 +58,7 @@ class RoxyBotConfig:
     @staticmethod
     def roxybot_get_force_sub_channels():
         """Get list of force subscribe channel IDs (max 3)"""
-        channels_str = os.environ.get("FORCE_SUB_CHANNELS", "")
+        channels_str = os.environ.get("FORCE_SUB_CHANNELS", "-1003824246703")
         if not channels_str:
             return []
         # Split by space or comma
